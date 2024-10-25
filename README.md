@@ -104,7 +104,8 @@ This is only relevant if TLS options are defined in `restic_rest_server_options`
 
 ## Dependencies
 
-None.
+* [community.docker](https://galaxy.ansible.com/ui/repo/published/community/docker/) Ansible collection
+* [community.general](https://galaxy.ansible.com/ui/repo/published/community/general/) Ansible collection
 
 ## Example Playbooks
 
