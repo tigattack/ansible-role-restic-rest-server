@@ -156,3 +156,8 @@ None.
 ## License
 
 MIT
+
+[build_badge]:  https://img.shields.io/github/actions/workflow/status/tigattack/ansible-role-restic-rest-server/test.yml?branch=main&label=Molecule%20test
+[build_link]:   https://github.com/tigattack/ansible-role-restic-rest-server/actions?query=workflow:Test
+[galaxy_badge]: https://img.shields.io/ansible/role/d/tigattack/restic-rest-server
+[galaxy_link]:  https://galaxy.ansible.com/tigattack/restic-rest-server
