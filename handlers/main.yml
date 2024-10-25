@@ -1,0 +1,10 @@
+---
+
+- name: Restart rest-server
+  community.docker.docker_container:
+    name: "{{ restic_rest_server_container_name }}"
+    restart: true
+    state: started
+    comparisons:
+      '*': ignore
+  when: deploy_rest_server is not changed

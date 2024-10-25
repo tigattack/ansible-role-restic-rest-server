@@ -1,0 +1,63 @@
+---
+argument_specs:
+  main:
+    short_description: Deploy restic's Rest Server in a Docker container
+    description:
+      - This role will deploy Rrestic's Rest Server in a Docker container.
+      - 'Prerequisites:'
+      - '  - Docker'
+      - '  - A chosen backup destination path on the host'
+      - '  - A chosen data path on the host (this is only used to store the generated htpasswd file)'
+      - '  - Generated certificates if using TLS'
+    version_added: '1.0.0'
+    author: tigattack
+    options:
+      restic_rest_server_version:
+        type: str
+        default: latest
+        description: Rest Server Docker image version.
+
+      restic_rest_server_container_name:
+        type: str
+        default: rest-server
+        description: Rest Server container's name.
+
+      restic_rest_server_user:
+        type: str
+        default: rest
+        description: Username for Rest Server authentication.
+
+      restic_rest_server_password:
+        type: str
+        required: true
+        description: Password for Rest Server authentication.
+
+      restic_rest_server_port:
+        type: str
+        default: '8000'
+        description: The host port on which to expose Rest Server.
+
+      restic_rest_server_options:
+        type: list
+        elements: str
+        default: []
+        description:
+          - Additional options to pass to Rest Server.
+          - 'Available options: https://github.com/restic/rest-server/blob/master/README.md#usage'
+
+      restic_rest_server_data_path:
+        type: path
+        default: /opt/<restic_rest_server_container_name>
+        description:
+          - Rest Server data path on the host.
+          - The generated htpasswd file is stored in this path.
+
+      restic_rest_server_backup_path:
+        type: path
+        default: <restic_rest_server_data_path>/backups
+        description: Rest Server backup destination path on the host.
+
+      restic_rest_server_certificates_path:
+        type: path
+        default: <restic_rest_server_data_path>/certs
+        description: Rest Server certificates path on the host.

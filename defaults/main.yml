@@ -1,0 +1,18 @@
+---
+
+restic_rest_server_container_name: rest-server
+
+restic_rest_server_version: latest
+
+restic_rest_server_user: rest
+# restic_rest_server_password: ''
+
+restic_rest_server_port: '8000'
+
+restic_rest_server_options: []
+
+restic_rest_server_data_path: "{{ ['/opt', restic_rest_server_container_name] | path_join }}"
+
+restic_rest_server_backup_path: "{{ [restic_rest_server_data_path, 'backups'] | path_join }}"
+
+restic_rest_server_certificates_path: "{{ [restic_rest_server_data_path, 'certs'] | path_join }}"

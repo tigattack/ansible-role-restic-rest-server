@@ -1,0 +1,38 @@
+---
+name: Release
+on:
+  push:
+    tags:
+      - '*'
+  workflow_dispatch:
+
+jobs:
+  test:
+    uses: ./.github/workflows/test.yml
+  release:
+    runs-on: ubuntu-latest
+    needs: [test]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: 'tigattack.restic_rest_server'
+
+      - name: Set up Python 3.x
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Retrieve Galaxy API token
+        uses: bitwarden/sm-action@v2
+        with:
+          access_token: ${{ secrets.BWS_ACCESS_TOKEN }}
+          secrets: |
+            e890ac15-9c21-439a-a5d2-b118013ceeb6 > GALAXY_API_KEY
+
+      - name: Install Ansible
+        run: pip3 install ansible-core
+
+      - name: Import role to Galaxy
+        run: >-
+          ansible-galaxy role import --api-key "$GALAXY_API_KEY"
+          ${{ github.repository_owner }} ${{ github.event.repository.name }}

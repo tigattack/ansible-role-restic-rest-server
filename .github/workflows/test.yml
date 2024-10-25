@@ -1,0 +1,30 @@
+---
+name: Test
+on:
+  push:
+    branches: '*'
+    tags-ignore:
+      - '**'
+  schedule:
+    - cron: "0 5 * * 1"
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python 3.x
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run molecule tests
+        run: molecule -v test

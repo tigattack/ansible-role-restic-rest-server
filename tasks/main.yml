@@ -1,0 +1,35 @@
+---
+
+# Required for htpasswd generation task below
+- name: Install passlib Python module
+  pip:
+    name: passlib
+    state: present
+
+- name: Generate rest-server htpasswd file
+  community.general.htpasswd:
+    path: "{{ restic_rest_server_data_path }}/rest-server.htpasswd"
+    name: "{{ restic_rest_server_user }}"
+    password: "{{ restic_rest_server_password }}"
+    crypt_scheme: bcrypt
+    owner: root
+    group: root
+    mode: '0600'
+  notify: Restart rest-server
+
+- name: Deploy rest-server container
+  community.docker.docker_container:
+    name: "{{ restic_rest_server_container_name }}"
+    image: restic/rest-server:{{ restic_rest_server_version }}
+    restart_policy: always
+    volumes:
+      - "{{ restic_rest_server_data_path }}:/data:rw"
+      - "{{ restic_rest_server_backup_path }}:/backups:rw"
+      - "{{ restic_rest_server_certificates_path }}:/certs:ro"
+    ports: ["{{ restic_rest_server_port }}:8000"]
+    env:
+      DATA_DIRECTORY: /backups
+      PASSWORD_FILE: /data/rest-server.htpasswd
+      OPTIONS: "{{ restic_rest_server_options | join(' ') }}"
+    state: started
+  register: deploy_rest_server

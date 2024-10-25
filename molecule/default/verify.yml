@@ -1,0 +1,26 @@
+---
+- name: Verify
+  hosts: all
+  pre_tasks:
+    - name: Import defaults from rest-server role
+      ansible.builtin.include_vars:
+        file: "{{ [project_dir, 'defaults', 'main.yml'] | path_join }}"
+
+  roles:
+    - name: Install restic and initialise repository on rest server
+      role: roles-ansible.restic
+      vars:
+        restic_repos:
+          rest_server:
+            location: rest:http://{{ restic_rest_server_user }}:{{ restic_rest_server_password }}@localhost:{{ restic_rest_server_port }}/
+            password: test
+            init: true
+
+  tasks:
+    - name: Verify rest server responds
+      ansible.builtin.uri:
+        url: http://localhost:{{ restic_rest_server_port }}/config
+        status_code: 200
+        force_basic_auth: true
+        url_username: "{{ restic_rest_server_user }}"
+        url_password: "{{ restic_rest_server_password }}"
