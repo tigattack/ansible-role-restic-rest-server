@@ -7,9 +7,15 @@ Deploy restic's [Rest Server](https://github.com/restic/rest-server) in a Docker
 
 Install the role: `ansible-galaxy role install tigattack.restic_rest_server`
 
-## Requirements
+## Prerequisites
 
-None.
+* [community.docker](https://galaxy.ansible.com/ui/repo/published/community/docker/) Ansible collection. See [requirements.yml](requirements.yml).
+* [community.general](https://galaxy.ansible.com/ui/repo/published/community/general/) Ansible collection. See [requirements.yml](requirements.yml).
+* Docker. I recommend the [geerlingguy.docker](https://github.com/geerlingguy/ansible-role-docker) role.
+* A chosen backup destination path on the host.
+* A chosen data path on the host (this is only used to store the generated htpasswd file).
+* Generated certificates if using TLS.
+
 
 ## Role Variables
 
@@ -101,11 +107,6 @@ Rest Server certificates path on the host.
 By default, this is set to the data path described above (`restic_rest_server_data_path`) followed by `/certs`.
 
 This is only relevant if TLS options are defined in `restic_rest_server_options`.
-
-## Dependencies
-
-* [community.docker](https://galaxy.ansible.com/ui/repo/published/community/docker/) Ansible collection
-* [community.general](https://galaxy.ansible.com/ui/repo/published/community/general/) Ansible collection
 
 ## Example Playbooks
 
