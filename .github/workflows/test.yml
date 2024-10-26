@@ -11,6 +11,15 @@ on:
   workflow_call:
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ansible/ansible-lint@v24.9.2
+        with:
+          requirements_file: meta/requirements.yml
+
   test:
     runs-on: ubuntu-latest
 
