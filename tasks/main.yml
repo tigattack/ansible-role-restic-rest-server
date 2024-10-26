@@ -2,7 +2,7 @@
 
 # Required for htpasswd generation task below
 - name: Install passlib Python module
-  pip:
+  ansible.builtin.pip:
     name: passlib
     state: present
 

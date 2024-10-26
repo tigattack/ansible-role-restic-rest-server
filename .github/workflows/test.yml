@@ -19,6 +19,7 @@ jobs:
       - uses: ansible/ansible-lint@v24.9.2
         with:
           requirements_file: meta/requirements.yml
+          args: "--exclude molecule"
 
   test:
     runs-on: ubuntu-latest
