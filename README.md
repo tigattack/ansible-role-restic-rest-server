@@ -161,5 +161,5 @@ MIT
 
 [build_badge]:  https://img.shields.io/github/actions/workflow/status/tigattack/ansible-role-restic-rest-server/test.yml?branch=main&label=Lint%20%26%20Test
 [build_link]:   https://github.com/tigattack/ansible-role-restic-rest-server/actions?query=workflow:Test
-[galaxy_badge]: https://img.shields.io/ansible/role/d/tigattack/restic-rest-server
+[galaxy_badge]: https://img.shields.io/ansible/role/d/tigattack/restic_rest_server
 [galaxy_link]:  https://galaxy.ansible.com/ui/standalone/roles/tigattack/restic_rest_server/
