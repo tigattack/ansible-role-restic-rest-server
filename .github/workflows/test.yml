@@ -38,3 +38,6 @@ jobs:
 
       - name: Run molecule tests
         run: molecule -v test
+        env:
+          PY_COLORS: '1'
+          ANSIBLE_FORCE_COLOR: '1'
