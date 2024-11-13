@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: ansible/ansible-lint@v24.9.2
+      - uses: ansible/ansible-lint@v24.10.0
         with:
           requirements_file: requirements.yml
           args: "--exclude molecule"
