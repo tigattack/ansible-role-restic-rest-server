@@ -10,11 +10,21 @@
     - name: Install restic and initialise repository on rest server
       role: roles-ansible.restic
       vars:
+        restic_no_log: false
+        restic_backup_now: true
+        restic_backup_script_shell: bash
         restic_repos:
           rest_server:
             location: rest:http://{{ restic_rest_server_user }}:{{ restic_rest_server_password }}@localhost:{{ restic_rest_server_port }}/
             password: test
             init: true
+        restic_backups:
+          test:
+            name: test
+            repo: rest_server
+            src: /tmp
+            scheduled: true
+            schedule_oncalendar: '*-*-* 01:00:00'
 
   tasks:
     - name: Verify rest server responds
