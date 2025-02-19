@@ -1,5 +1,7 @@
 ---
 - name: Converge
   hosts: all
-  roles:
-    - role: ansible-role-restic-rest-server
+  tasks:
+    - name: Include role
+      ansible.builtin.include_role:
+        name: "{{ project_dir }}"
