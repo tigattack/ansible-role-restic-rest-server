@@ -1,6 +1,7 @@
 __pycache__
-.cache
-.vscode
 *.pyc
 *.retry
-*.venv
+.venv
+.cache
+.ansible
+.vscode
