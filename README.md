@@ -119,7 +119,7 @@ This is only relevant if TLS options are defined in `restic_rest_server_options`
   roles:
     - role: tigattack.restic_rest_server
       vars:
-        restic_backup_server_password: _!_CHANGE_ME_!_
+        restic_rest_server_password: _!_CHANGE_ME_!_
 ```
 
 **With Prometheus metrics endpoint enabled without authentication:**
@@ -131,8 +131,8 @@ This is only relevant if TLS options are defined in `restic_rest_server_options`
   roles:
     - role: tigattack.restic_rest_server
       vars:
-        restic_backup_server_password: _!_CHANGE_ME_!_
-        restic_backup_server_options:
+        restic_rest_server_password: _!_CHANGE_ME_!_
+        restic_rest_server_options:
           - --prometheus
           - --prometheus-no-auth
 ```
@@ -146,10 +146,10 @@ This is only relevant if TLS options are defined in `restic_rest_server_options`
   roles:
     - role: tigattack.restic_rest_server
       vars:
-        restic_backup_server_password: _!_CHANGE_ME_!_
-        restic_backup_server_port: '8080'
-        restic_backup_server_certificates_path: /etc/letsencrypt
-        restic_backup_server_options:
+        restic_rest_server_password: _!_CHANGE_ME_!_
+        restic_rest_server_port: '8080'
+        restic_rest_server_certificates_path: /etc/letsencrypt
+        restic_rest_server_options:
           - --tls
           - --tls-cert /certs/live/my_domain/fullchain.pem
           - --tls-key /certs/live/my_domain/privkey.pem
