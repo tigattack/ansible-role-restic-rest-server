@@ -1,6 +1,6 @@
 ---
 collections:
   - name: community.general
-    version: 10.7.0
+    version: 10.7.6
   - name: community.docker
     version: 4.6.0
