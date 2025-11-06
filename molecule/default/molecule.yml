@@ -10,7 +10,7 @@ driver:
 
 platforms:
   - name: instance
-    image: "geerlingguy/docker-${MOLECULE_DISTRO:-debian12}-ansible:latest"
+    image: "geerlingguy/docker-${MOLECULE_DISTRO:-debian13}-ansible:latest"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
@@ -18,10 +18,24 @@ platforms:
     privileged: true
     pre_build_image: true
 
+ansible:
+  cfg:
+    defaults:
+      callbacks_enabled: profile_tasks
+
 provisioner:
   name: ansible
   inventory:
     group_vars:
       all:
         restic_rest_server_password: foo
-        project_dir: ${MOLECULE_PROJECT_DIRECTORY}
+
+scenario:
+  test_sequence:
+    - dependency
+    - create
+    - prepare
+    - converge
+    - idempotence
+    - verify
+    - destroy
