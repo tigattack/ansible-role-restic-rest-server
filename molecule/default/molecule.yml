@@ -29,6 +29,7 @@ provisioner:
     group_vars:
       all:
         restic_rest_server_password: foo
+        project_dir: ${MOLECULE_PROJECT_DIRECTORY}
 
 scenario:
   test_sequence:
