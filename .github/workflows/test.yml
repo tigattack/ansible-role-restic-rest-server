@@ -2,42 +2,61 @@
 name: Test
 on:
   push:
-    branches: '*'
+    branches: [main]
     tags-ignore:
       - '**'
+  pull_request:
   schedule:
     - cron: "0 5 * * 1"
   workflow_dispatch:
   workflow_call:
+    outputs:
+      role_name:
+        description: 'Ansible role name'
+        value: ${{ jobs.role_name.outputs.role_name }}
 
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - uses: ansible/ansible-lint@v25.9.2
         with:
           requirements_file: requirements.yml
           args: "--exclude molecule"
 
+  role_name:
+    runs-on: ubuntu-latest
+    outputs:
+      role_name: ${{ steps.get_role_name.outputs.role_name }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - id: get_role_name
+        run: |
+          namespace=`yq eval '.galaxy_info.namespace' meta/main.yml`
+          role_name=`yq eval '.galaxy_info.role_name' meta/main.yml`
+          echo "role_name=${namespace}.${role_name}" | tee -a $GITHUB_OUTPUT
+
   test:
     runs-on: ubuntu-latest
+    needs: [role_name]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - name: Setup Python 3.x
-        uses: actions/setup-python@v6
+      - uses: actions/setup-python@v6
         with:
           python-version: '3.x'
           cache: 'pip'
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+      - run: pip install -r requirements.txt
 
-      - name: Run molecule tests
-        run: molecule -v test
+      - run: |
+          molecule -v converge
+          molecule -v idempotence
+          molecule -v verify
         env:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
