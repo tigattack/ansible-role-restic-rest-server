@@ -2,8 +2,8 @@
 
 # Required for htpasswd generation task below
 - name: Install passlib Python module
-  ansible.builtin.pip:
-    name: passlib
+  ansible.builtin.package:
+    name: python3-passlib
     state: present
 
 - name: Generate rest-server htpasswd file
