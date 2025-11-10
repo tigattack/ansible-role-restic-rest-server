@@ -1,7 +1,8 @@
+.DS_Store
 __pycache__
+.cache
 *.pyc
 *.retry
 .venv
-.cache
+venv
 .ansible
-.vscode
