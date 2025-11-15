@@ -28,3 +28,7 @@
     - role: geerlingguy.docker
       vars:
         docker_install_compose_plugin: false
+        # Without this, Docker falls back to VFS.
+        # VFS uses more space and can cause GHA runners to run out of space.
+        docker_daemon_options:
+          storage-driver: overlay2
