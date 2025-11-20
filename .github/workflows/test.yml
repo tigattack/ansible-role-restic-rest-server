@@ -19,7 +19,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - uses: ansible/ansible-lint@v25.11.0
         with:
@@ -31,7 +31,7 @@ jobs:
     outputs:
       role_name: ${{ steps.get_role_name.outputs.role_name }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - id: get_role_name
         run: |
@@ -44,7 +44,7 @@ jobs:
     needs: [role_name]
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - uses: actions/setup-python@v6
         with:
